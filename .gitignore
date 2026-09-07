@@ -5,11 +5,11 @@ build/
 dist/
 *.egg-info/
 
-# generated output
-SCOPE.md
-PROMPT.md
-targets.txt
-accounts.csv
+# generated output (repo root only - anchored so they don't shadow praude/templates/*)
+/SCOPE.md
+/PROMPT.md
+/targets.txt
+/accounts.csv
 
 # keep gitkeeps
 !**/.gitkeep
