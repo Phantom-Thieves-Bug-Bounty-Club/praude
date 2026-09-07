@@ -5,7 +5,7 @@ Praude (program to claude) is a CLI tool to make an instruction file for claude 
 ## Install
 
 ```bash
-pipx install git+https://github.com/SpiizN/praude.git
+pipx install git+https://github.com/Phantom-Thieves-Bug-Bounty-Club/praude.git
 ```
 
 Or from a local clone:
