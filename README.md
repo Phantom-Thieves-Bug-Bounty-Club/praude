@@ -40,6 +40,9 @@ This writes three files in the current directory:
 - `--proxy URL` — route every HTTP request through a proxy (e.g. `--proxy http://127.0.0.1:8080`).
 - `--store-token` — after login, asks for confirmation and, if accepted, writes the
   YWH token to `/tmp/.praude-token`.
+- `--claude` / `--codex` — tailor `PROMPT.md` to that agent (context file `CLAUDE.md`
+  resp. `AGENTS.md`, and agent-specific reporting-skill wording). With neither flag
+  the prompt stays generic and prescribes no particular file names.
 
 ## Authentication
 

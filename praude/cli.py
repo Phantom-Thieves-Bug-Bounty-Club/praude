@@ -25,11 +25,13 @@ def run():
     parser = argparse.ArgumentParser(prog="praude")
     parser.add_argument("slug", help="Program slug")
     parser.add_argument("--proxy", help="Proxy URL for all HTTP requests, e.g. http://127.0.0.1:8080")
-    parser.add_argument(
-        "--store-token",
-        action="store_true",
-        help="After login, offer to store the YWH token in /tmp/.praude-token for reuse",
-    )
+    parser.add_argument("--store-token", action="store_true", help="After login, offer to store the YWH token in /tmp/.praude-token for reuse")
+
+    # agent type spec
+    agent = parser.add_mutually_exclusive_group()
+    agent.add_argument("--claude", dest="agent", action="store_const", const="claude", help="Tailor PROMPT.md for Claude Code (CLAUDE.md, ~/.claude skills)")
+    agent.add_argument("--codex", dest="agent", action="store_const", const="codex", help="Tailor PROMPT.md for Codex (AGENTS.md)")
+
     args = parser.parse_args()
 
     ui.banner()
@@ -39,6 +41,7 @@ def run():
 
     ywh = YesWeHack(proxy=args.proxy, store_token=args.store_token)
     program_data = ywh.get_instructions_data(args.slug)
+    program_data["agent"] = args.agent
 
     render("instructions.md", "SCOPE.md", program_data)
     render("prompt.md", "PROMPT.md", program_data)
