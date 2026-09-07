@@ -41,6 +41,10 @@ class YesWeHack:
         response = self.__s.get(f"{self.base_url}/programs/{slug}/hunter/credentials")
         program.update({"credentials": response.json()})
 
+        ## hunter email aliases (account-wide, not program-specific)
+        response = self.__s.get(f"{self.base_url}/user/email-aliases")
+        program.update({"email_aliases": response.json().get("items", [])})
+
         ## hand-maintained accounts (accounts.csv in the current directory)
         manual_accounts = []
         if os.path.exists(ACCOUNTS_FILE):
@@ -94,6 +98,11 @@ class YesWeHack:
                 "notes": "; ".join(notes),
             })
 
+        email_aliases = [
+            a.get("alias") for a in program.get("email_aliases") or []
+            if a.get("alias") and not a.get("disabled")
+        ]
+
         # comptes manuels
         for row in program.get("manual_accounts") or []:
             key = ((row.get("scope") or "").strip().lower(), (row.get("username") or "").strip().lower())
@@ -114,6 +123,7 @@ class YesWeHack:
             "in_scope": in_scope,
             "out_of_scope": program.get("out_of_scope") or [],
             "accounts": accounts,
+            "email_aliases": email_aliases,
             "qualifying_vulnerabilities": program.get("qualifying_vulnerability") or [],
             "non_qualifying_vulnerabilities": program.get("non_qualifying_vulnerability") or [],
             "rules": "\n".join(f"> {line}" for line in (program.get("rules") or "").splitlines()),

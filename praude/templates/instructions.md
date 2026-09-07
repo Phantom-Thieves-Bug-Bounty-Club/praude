@@ -59,6 +59,20 @@ No test accounts were provisioned directly for this program. Refer to the Accoun
 No test accounts were provisioned for this program. Testing must be limited to unauthenticated / publicly accessible functionality.
 {% endif %}
 
+## Email aliases
+
+{% if email_aliases %}
+The following YesWeHack email aliases belong to the hunter account. They are not necessarily accounts (though some may already be registered), and any mail sent to them reaches the hunter inbox. Use them to self-register on in-scope assets when credentials are needed and the program allows self-registration (they also receive confirmation links, OTPs and password-reset emails).
+
+{% for alias in email_aliases -%}
+- `{{ alias }}`
+{% endfor %}
+
+You can also use temporary / disposable email addresses if needed.
+{% else %}
+No email aliases are attached to the hunter account. You can use temporary / disposable email addresses if you need to self-register.
+{% endif %}
+
 ## Vulnerability types
 
 The vulnerabilities are divided into two categories:
